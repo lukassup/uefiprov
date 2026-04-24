@@ -1,0 +1,23 @@
+<network xmlns:dnsmasq='http://libvirt.org/schemas/network/dnsmasq/1.0'>
+  <name>default</name>
+  <forward mode='nat'>
+    <nat>
+      <port start='1024' end='65535'/>
+    </nat>
+  </forward>
+  <bridge name='virbr0' stp='on' delay='0'/>
+  <ip address='192.168.122.1' netmask='255.255.255.0'>
+    <dhcp>
+      <range start='192.168.122.2' end='192.168.122.254'/>
+    </dhcp>
+  </ip>
+  <dnsmasq:options>
+    <dnsmasq:option value='dhcp-vendorclass=set:efi-amd64-http,HTTPClient:Arch:00016'/>
+    <dnsmasq:option value='dhcp-option-force=tag:efi-amd64-http,60,HTTPClient'/>
+    <dnsmasq:option value='dhcp-boot=tag:efi-amd64-http,&quot;http://192.168.122.1/EFI/BOOT/BOOTX64.EFI&quot;'/>
+    <dnsmasq:option value='dhcp-vendorclass=set:efi-aarch64-http,HTTPClient:Arch:00019'/>
+    <dnsmasq:option value='dhcp-option-force=tag:efi-aarch64-http,60,HTTPClient'/>
+    <dnsmasq:option value='dhcp-boot=tag:efi-aarch64-http,&quot;http://192.168.122.1/EFI/BOOT/BOOTAA64.EFI&quot;'/>
+  </dnsmasq:options>
+</network>
+

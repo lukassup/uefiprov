@@ -8,7 +8,7 @@ set -euo pipefail
 #
 
 # Get the installation ISO
-curl -LOC- https://ftp.fau.de/rockylinux/9.7/isos/aarch64/Rocky-9-latest-aarch64-minimal.iso
+curl -LOC- https://ftp.fau.de/rockylinux/9/isos/aarch64/Rocky-9-latest-aarch64-minimal.iso
 mkdir -p iso
 hdiutil attach Rocky-9-latest-aarch64-minimal.iso -mountpoint iso -imagekey diskimage-class=CRawDiskImage -quiet -nobrowse -readonly
 
