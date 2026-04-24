@@ -1,0 +1,6 @@
+*.iso
+*.qcow2
+*.fd
+EFI
+images
+iso
