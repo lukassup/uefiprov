@@ -9,24 +9,24 @@ set -euo pipefail
 
 # Get the installation ISO
 curl -LOC- https://ftp.fau.de/rockylinux/9.7/isos/aarch64/Rocky-9-latest-aarch64-minimal.iso
-mkdir -pv iso
+mkdir -p iso
 hdiutil attach Rocky-9-latest-aarch64-minimal.iso -mountpoint iso -imagekey diskimage-class=CRawDiskImage -quiet -nobrowse -readonly
 
 # Prepare files for netboot
-ln -fsv iso/images .
-cp -rv iso/EFI .
-chmod -Rv a+rX EFI
-cp -vf grub.aarch64.cfg EFI/BOOT/grub.cfg
+ln -fs iso/images .
+cp -r iso/EFI .
+chmod -R a+rX EFI
+cp -f grub.aarch64.cfg EFI/BOOT/grub.cfg
 
 FW_CODE="$(brew --prefix qemu)/share/qemu/edk2-aarch64-code.fd"
 FW_VARS="$(brew --prefix qemu)/share/qemu/edk2-arm-vars.fd"
 
 # Copy EFI vars template and setup scrath rootdisk image
-cp -v $FW_VARS tmp-efivars.fd
-qemu-img create -f qcow2 tmp-root.qcow2 25G
+cp $FW_VARS tmp-efivars.fd
+qemu-img create -q -f qcow2 tmp-root.qcow2 25G
 
 # Networking setup
-echo '==> Run: sudo ipconfig set bridge100 MANUAL 192.168.122.1'
+echo '==> Run: ./setup-macos.sh'
 echo '==> Run: sudo dnsmasq -C dnsmasq.conf'
 echo '==> Run: sudo nginx -p . -c nginx.conf'
 
